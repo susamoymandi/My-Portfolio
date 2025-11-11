@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+  <title>Susamoy Mandi | Portfolio</title>
+
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="logo"></div><strong>Susamoy Mandi</strong>
+      </div>
+      <nav class="navlinks">
+          <a href="#projects">Projects</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+          <a href="https://github.com/susamoymandi" target="_blank">Github</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h2>BCA Student • Web Developer</h2>
+      <p>I design and build modern web pages using HTML, CSS, and JavaScript. 
+I focus on clean layout, smooth UI, and practical functionality. 
+Currently developing stronger backend and deployment skills.
+</p>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <div class="grid">
+        <!-- Duplicate these blocks for each project -->
+        <article class="card">
+          <div class="thumb"><img src="MovieLogo.jpg" alt=""></div>
+          <h3>Free Movies Downloader</h3>
+          <p>Short description of the project.</p>
+          <div class="meta">
+            <span class="pill">HTML / CSS / JS</span>
+            <div class="links">
+              <a href="https://susamoymandi.github.io/FreeMovies-Downloader/" target="_blank">Live</a>
+              <a href="https://github.com/susamoymandi/FreeMovies-Downloader.git" target="_blank">Code</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="thumb"><img src="SkylensLogo.jpg" alt=""></div>
+          <h3>Skylens Weather Forecast</h3>
+          <p>Short description of the project.</p>
+          <div class="meta">
+            <span class="pill">HTML / CSS / JS</span>
+            <div class="links">
+              <a href="https://susamoymandi.github.io/Skylens/" target="_blank">Live</a>
+              <a href="https://github.com/susamoymandi/Skylens.git" target="_blank">Code</a>
+            </div>
+          </div>
+        </article>
+        <!-- End Duplicate -->
+      </div>
+    </section>
+
+    <section id="about" style="padding-top:60px">
+      <h2>About</h2>
+      <p>Aspiring Tech Enthusiast | 2nd-Year BCA Student
+
+I’m a second-year BCA student at Vivekananda Mahavidyalaya, Haripal (University of Burdwan), currently exploring Java, software development, and web technologies. I enjoy solving problems through code, building user-friendly applications, and learning new tools.
+
+Always eager to collaborate, take on projects, and grow both technically and personally.</p>
+    </section>
+
+    <section id="contact" style="padding-top:60px">
+      <h2>Contact</h2>
+      <p>Linkedin: <a href="https://www.linkedin.com/in/susamoymandi">Susamoy Mandi</a></p>
+      <p>My Linktree: <a href="https://linktr.ee/susamoy_mandi">Linktree</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <small>© <span id="year"></span> Susamoy Mandi</small>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
