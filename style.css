@@ -1,140 +1,421 @@
+:root{
+  --bg:#07070c;
+  --card:rgba(255,255,255,.07);
+  --muted:#b9b9c7;
+  --txt:#f4f4fa;
+  --brand:#a88bff;
+  --brand-2:#7a5cff;
+  --radius:26px;
+  --maxw:1140px;
 
-    :root{
-      --bg:#0c0c10;
-      --card:#141419;
-      --muted:#b9b9c7;
-      --txt:#ececf3;
-      --brand:#a88bff;
-      --brand-2:#7a5cff;
-      --radius:18px;
-      --shadow:0 8px 22px rgba(0,0,0,.45);
-      --shadow-lg:0 16px 40px rgba(0,0,0,.5);
-      --maxw:1140px;
-    }
-    body{
-      margin:0;
-      font-family:system-ui, sans-serif;
-      background:var(--bg);
-      color:var(--txt);
-      line-height:1.6
-    }
-    .container{
-      max-width:var(--maxw);
-      padding:32px 20px;
-      margin:auto
-    }
-    header{
-      position:sticky;
-      top:0;
-      background:#0c0c1090;
-      backdrop-filter:blur(10px);
-      border-bottom:1px solid rgba(255,255,255,.08)
-    }
-    .nav{
-      display:flex;
-      justify-content:space-between;
-      align-items:center
-    }
-    .navlinks{
-      display:flex;
-      gap:16px
-    }
-    .navlinks a{
-      text-decoration:none;
-      color:var(--muted);
-      transition:.3s
-    }
-    .navlinks a:hover{
-      color:var(--brand)
-    }
-    .logo{
-      height:36px;
-      width:36px;
-      border-radius:10px;
-      background:linear-gradient(135deg,var(--brand),var(--brand-2))
-    }
+  /* liquid glass tokens */
+  --glass-bg:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.04));
+  --glass-border:rgba(255,255,255,.18);
+  --glass-blur:blur(28px) saturate(180%);
+  --glass-shadow:
+    inset 0 1px 0 rgba(255,255,255,.40),
+    inset 0 -1px 0 rgba(255,255,255,.06),
+    inset 0 0 22px rgba(255,255,255,.04),
+    0 18px 40px rgba(0,0,0,.45);
+}
 
-    .hero{
-      padding:80px 0;
-      display:flex;
-      flex-direction:column;
-      gap:10px
-    }
-    .hero h2{
-      font-size:clamp(28px,6vw,44px);
-      font-weight:700
-    }
-    .hero p{
-      max-width:60ch;
-      color:var(--muted)
-    }
+*{box-sizing:border-box}
+html{
+  background:var(--bg);
+  scroll-behavior:smooth;
+  scroll-padding-top:100px;
+}
 
-    #projects{
-      padding-top:40px
-    }
-    #projects h2{
-      font-size:32px;
-      margin-bottom:20px
-    }
-    .grid{
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-      gap:20px
-    }
-    .card{
-      background:var(--card);
-      padding:18px;
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      transition:.2s;
-      border:1px solid rgba(255,255,255,.06)
-    }
-    /* .card:hover{
-    transform:translateY(-4px);
-    box-shadow:var(--shadow-lg)
-    } */
-    .thumb{
-      aspect-ratio:16/9;
-      border-radius:14px;
-      background:#0e0e14;
-      margin-bottom:12px;
-      overflow:hidden
-    }
-    .thumb img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block
-    }
-    .meta{
-      margin-top:12px;
-      display:flex;
-      justify-content:space-between;
-      align-items:center
-    }
-    .pill{
-      font-size:12px;
-      padding:5px 10px;
-      border-radius:999px;
-      background:rgba(168,139,255,.14);
-      border:1px solid rgba(168,139,255,.25)
-    }
-    .links a{
-      color:var(--brand);
-      font-size:14px;
-      text-decoration:none;
-      margin-left:10px;
-      border-bottom:1px solid transparent
-    }
-    .links a:hover{
-      border-bottom-color:var(--brand)
-    }
+/* ---------- Colour blobs: glass needs something behind it to bend ---------- */
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Inter","Segoe UI",system-ui,sans-serif;
+  background:transparent;
+  color:var(--txt);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  position:relative;
+}
+body::before,
+body::after{
+  content:"";
+  position:fixed;
+  z-index:-1;
+  border-radius:50%;
+  filter:blur(90px);
+  pointer-events:none;
+}
+body::before{
+  width:60vmax;height:60vmax;
+  top:-20vmax;left:-15vmax;
+  background:radial-gradient(circle,#6a5acd 0%,rgba(106,90,205,0) 70%);
+  opacity:.14;
+  animation:drift1 24s ease-in-out infinite alternate;
+}
+body::after{
+  width:55vmax;height:55vmax;
+  bottom:-20vmax;right:-15vmax;
+  background:radial-gradient(circle,#5b6b8c 0%,rgba(91,107,140,0) 70%);
+  opacity:.12;
+  animation:drift2 28s ease-in-out infinite alternate;
+}
+@keyframes drift1{to{transform:translate(12vmax,10vmax) scale(1.1)}}
+@keyframes drift2{to{transform:translate(-10vmax,-8vmax) scale(1.15)}}
 
-    footer{
-      margin-top:60px;
-      padding:20px 0;
-      text-align:center;
-      color:var(--muted);
-      border-top:1px solid rgba(255,255,255,.08)
-    }
-    
+.container{
+  max-width:var(--maxw);
+  padding:32px 20px;
+  margin:auto;
+}
+
+/* ---------- Shared glass surface ---------- */
+.card,
+.hero,
+#about,
+#contact,
+.nav{
+  background:var(--glass-bg);
+  -webkit-backdrop-filter:var(--glass-blur);
+  backdrop-filter:var(--glass-blur);
+  border:1px solid var(--glass-border);
+  box-shadow:var(--glass-shadow);
+  position:relative;
+}
+
+/* ---------- Floating glass nav pill ---------- */
+header{
+  position:sticky;
+  top:12px;
+  z-index:50;
+  background:none;
+  border:0;
+  padding:0 12px;
+}
+.nav{
+  max-width:var(--maxw);
+  margin:12px auto 0;
+  padding:10px 14px 10px 12px;
+  border-radius:999px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+.nav strong{
+  font-weight:600;
+  letter-spacing:-.01em;
+  white-space:nowrap;
+}
+.nav img{
+  box-shadow:0 0 0 2px rgba(255,255,255,.25);
+  object-fit:cover;
+}
+.navlinks{
+  display:flex;
+  gap:4px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+.navlinks a{
+  text-decoration:none;
+  color:var(--txt);
+  opacity:.75;
+  padding:8px 16px;
+  border-radius:999px;
+  font-size:14px;
+  font-weight:500;
+  transition:background .25s,opacity .25s,box-shadow .25s;
+}
+.navlinks a:hover,
+.navlinks a:focus-visible{
+  opacity:1;
+  background:rgba(255,255,255,.14);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35);
+  outline:none;
+}
+
+/* ---------- Hero ---------- */
+.hero{
+  margin-top:40px;
+  padding:64px 44px;
+  border-radius:36px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  overflow:hidden;
+}
+/* specular highlight sweeping across the top */
+.hero::before,
+.card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  background:linear-gradient(115deg,rgba(255,255,255,.22) 0%,rgba(255,255,255,0) 38%);
+  pointer-events:none;
+}
+.hero h2{
+  margin:0;
+  font-size:clamp(30px,6vw,52px);
+  font-weight:700;
+  letter-spacing:-.03em;
+  line-height:1.1;
+  color:#fff;
+}
+.hero p{
+  margin:0;
+  max-width:60ch;
+  color:var(--muted);
+  font-size:17px;
+}
+
+/* ---------- Section headings ---------- */
+h2{letter-spacing:-.02em}
+#projects{padding-top:56px}
+#projects h2{
+  font-size:32px;
+  margin:0 0 22px 6px;
+}
+
+/* ---------- Project cards ---------- */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:22px;
+}
+.card{
+  padding:14px 14px 18px;
+  border-radius:var(--radius);
+  overflow:hidden;
+  transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s;
+}
+.card:hover{
+  transform:translateY(-6px) scale(1.015);
+  border-color:rgba(255,255,255,.32);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.5),
+    inset 0 -1px 0 rgba(255,255,255,.08),
+    0 26px 50px rgba(0,0,0,.55);
+}
+.card:active{transform:scale(.985)}
+.card h3{
+  margin:6px 6px 4px;
+  font-size:18px;
+  font-weight:600;
+  letter-spacing:-.01em;
+}
+.card h3 a{
+  color:var(--txt);
+  text-decoration:none;
+}
+.card p{
+  margin:0 6px;
+  color:var(--muted);
+  font-size:14px;
+}
+.thumb{
+  aspect-ratio:16/9;
+  border-radius:18px;
+  background:rgba(0,0,0,.35);
+  margin-bottom:12px;
+  overflow:hidden;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);
+}
+.thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition:transform .6s cubic-bezier(.2,.8,.2,1);
+}
+.card:hover .thumb img{transform:scale(1.06)}
+
+.meta{
+  margin:14px 6px 0;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.pill{
+  font-size:12px;
+  font-weight:500;
+  padding:5px 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25);
+}
+.links a{
+  color:var(--brand);
+  font-size:14px;
+  text-decoration:none;
+  margin-left:10px;
+  border-bottom:1px solid transparent;
+}
+.links a:hover{border-bottom-color:var(--brand)}
+
+/* ---------- About / Contact glass panels ---------- */
+/* !important is needed only because your HTML has inline padding-top:60px */
+#about,
+#contact{
+  margin-top:48px;
+  padding:36px 40px !important;
+  border-radius:32px;
+  overflow:hidden;
+}
+#about h2,
+#contact h2{margin:0 0 12px;font-size:28px}
+#about p{
+  color:var(--muted);
+  max-width:70ch;
+  white-space:pre-line;   /* keeps your line breaks without touching the HTML */
+  margin:0;
+}
+#contact p{margin:8px 0;color:var(--muted)}
+#contact a{
+  color:var(--txt);
+  text-decoration:none;
+  padding:3px 12px;
+  margin-left:4px;
+  border-radius:999px;
+  background:rgba(255,255,255,.10);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3);
+  transition:background .25s,color .25s;
+}
+#contact a:hover,
+#contact a:focus-visible{
+  background:rgba(255,255,255,.20);
+  color:#fff;
+  outline:none;
+}
+
+/* ---------- Footer ---------- */
+footer{
+  margin-top:60px;
+  padding:24px 0 32px;
+  text-align:center;
+  color:var(--muted);
+  border-top:0;
+}
+
+/* ---------- Accessibility & fallbacks ---------- */
+a:focus-visible{
+  outline:2px solid var(--brand);
+  outline-offset:3px;
+}
+@media (prefers-reduced-motion:reduce){
+  body::before,body::after{animation:none}
+  .card,.thumb img{transition:none}
+}
+/* browsers without backdrop-filter: use a more opaque surface so text stays readable */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .card,.hero,#about,#contact,.nav{background:rgba(24,24,34,.92)}
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width:640px){
+  .nav strong{display:none}
+  .nav{padding:8px}
+  .navlinks a{padding:8px 12px;font-size:13px}
+  .hero{padding:40px 24px;border-radius:28px}
+  #about,#contact{padding:28px 22px !important}
+}
+
+
+/* ---------- Basic image protection (deters casual dragging/saving only) ---------- */
+img{
+  -webkit-user-drag:none;
+  user-drag:none;
+  -webkit-user-select:none;
+  user-select:none;
+  -webkit-touch-callout:none;   /* blocks iOS long-press "Save Image" */
+  pointer-events:none;          /* clicks pass through to the parent link/card */
+}
+
+
+/* =====================================================================
+   LIQUID UPGRADE: lens-like edges, thicker glass, wet sheen
+   ===================================================================== */
+
+:root{
+  --glass-bg:
+    linear-gradient(145deg,rgba(255,255,255,.17) 0%,rgba(255,255,255,.05) 45%,rgba(255,255,255,.09) 100%);
+  --glass-blur:blur(20px) saturate(200%) brightness(1.1) contrast(1.03);
+  --glass-shadow:
+    inset 0 1px 1px rgba(255,255,255,.55),      /* top lip */
+    inset 0 -1px 1px rgba(255,255,255,.12),     /* bottom lip */
+    inset 6px 8px 22px rgba(255,255,255,.06),   /* thick-glass inner glow */
+    inset -6px -8px 22px rgba(0,0,0,.12),       /* inner depth */
+    0 22px 48px rgba(0,0,0,.50),
+    0 2px 6px rgba(0,0,0,.35);
+}
+
+/* Gradient rim light: bright at top-left and bottom-right, dim in between.
+   This is the signature edge of Apple's Liquid Glass. */
+.card::after,
+.hero::after,
+#about::after,
+#contact::after,
+.nav::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border-radius:inherit;
+  padding:1.5px;
+  background:linear-gradient(135deg,
+    rgba(255,255,255,.85) 0%,
+    rgba(255,255,255,.10) 28%,
+    rgba(255,255,255,.04) 55%,
+    rgba(255,255,255,.12) 78%,
+    rgba(255,255,255,.60) 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+  mask-composite:exclude;
+  pointer-events:none;
+}
+
+/* Wet sheen: a soft highlight band that slides across the card on hover */
+.card::before{
+  background:linear-gradient(115deg,
+    rgba(255,255,255,0) 20%,
+    rgba(255,255,255,.22) 38%,
+    rgba(255,255,255,0) 56%);
+  background-size:260% 100%;
+  background-position:100% 0;
+  transition:background-position .9s cubic-bezier(.2,.8,.2,1);
+}
+.card:hover::before{background-position:0 0}
+
+/* Nav pill feels like a physical bead of glass */
+.nav{
+  border-radius:999px;
+  box-shadow:var(--glass-shadow),0 0 0 1px rgba(255,255,255,.04);
+}
+.navlinks a{
+  transition:background .3s,opacity .3s,box-shadow .3s,transform .25s cubic-bezier(.3,1.6,.5,1);
+}
+.navlinks a:hover{transform:scale(1.06)}
+.navlinks a:active{transform:scale(.96)}
+
+/* Pills and contact links get the same lip highlights, spring on press */
+.pill,
+#contact a{
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.5),inset 0 -1px 1px rgba(255,255,255,.1),0 4px 10px rgba(0,0,0,.25);
+}
+#contact a{transition:background .3s,transform .25s cubic-bezier(.3,1.6,.5,1)}
+#contact a:hover{transform:translateY(-1px) scale(1.04)}
+#contact a:active{transform:scale(.96)}
+
+/* Thumbnails look like they sit under a glass pane */
+.thumb{
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),inset 0 1px 12px rgba(255,255,255,.10);
+}
+
+/* Reduced motion: no sliding sheen */
+@media (prefers-reduced-motion:reduce){
+  .card::before{transition:none}
+  .navlinks a,#contact a{transition:none}
+}
