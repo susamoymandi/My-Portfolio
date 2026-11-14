@@ -419,3 +419,92 @@ img{
   .card::before{transition:none}
   .navlinks a,#contact a{transition:none}
 }
+
+
+/* =====================================================================
+   PHONE OPTIMISATION
+   ===================================================================== */
+
+/* 1. Touch devices: no sticky hover states, real pressed feedback instead */
+@media (hover:none){
+  .card:hover{
+    transform:none;
+    box-shadow:var(--glass-shadow);
+    border-color:var(--glass-border);
+  }
+  .card:hover .thumb img{transform:none}
+  .card:hover::before{background-position:100% 0}
+  .navlinks a:hover,
+  #contact a:hover{transform:none}
+  .card:active{transform:scale(.97)}
+  .navlinks a:active{background:rgba(255,255,255,.18);transform:scale(.95)}
+  a{-webkit-tap-highlight-color:transparent}
+}
+
+/* 2. Phones and small tablets: cheaper glass, lighter background, tidier layout */
+@media (max-width:640px){
+
+  /* Backdrop blur is the most expensive thing on a phone GPU:
+     lighter filter, and no animated blobs */
+  :root{
+    --glass-blur:blur(14px) saturate(160%);
+    --radius:22px;
+  }
+  body::before,
+  body::after{
+    filter:blur(60px);
+    animation:none;
+  }
+  body{min-height:100dvh}
+
+  .container{padding:20px 14px}
+  header{padding:0 10px;top:8px}
+
+  /* Nav: avatar + 4 links in one pill, big enough to tap (>=40px) */
+  .nav{margin-top:8px;padding:6px 8px;gap:6px}
+  .nav strong{display:none}
+  .navlinks{flex-wrap:nowrap;gap:2px;width:100%;justify-content:space-between}
+  .navlinks a{
+    min-height:40px;
+    display:inline-flex;
+    align-items:center;
+    padding:0 11px;
+    font-size:13px;
+  }
+
+  /* Hero */
+  .hero{margin-top:24px;padding:34px 22px;border-radius:28px}
+  .hero p{font-size:15px}
+
+  /* Section spacing */
+  #projects{padding-top:36px}
+  #projects h2{font-size:26px}
+  .grid{grid-template-columns:1fr;gap:16px}
+  .card{padding:12px 12px 16px}
+  .card h3{font-size:17px}
+
+  /* About and Contact */
+  #about,#contact{margin-top:28px;padding:26px 20px !important;border-radius:26px}
+  #about h2,#contact h2{font-size:24px}
+  #contact a{
+    display:inline-block;
+    margin:2px 0 2px 2px;
+    padding:6px 14px;
+    word-break:break-word;
+  }
+
+  footer{margin-top:36px}
+}
+
+/* 3. Very small phones (iPhone SE, small Androids) */
+@media (max-width:400px){
+  .nav img{width:32px !important;height:32px !important}  /* overrides your inline 40px */
+  .navlinks a{padding:0 8px;font-size:12.5px}
+  .hero{padding:28px 18px}
+}
+
+/* 4. Landscape phones: don't let the floating nav eat the screen */
+@media (max-height:480px) and (orientation:landscape){
+  header{position:static}
+  .hero{padding:28px 28px}
+}
